@@ -6,7 +6,7 @@ namespace Siemens.Internship2026.GradeBook.Repositories;
 public class ItemRepository : IItemReader
 {
     private readonly HttpClient _httpClient;
-    private const string Url = "https://pastebin.com/raw/deL5hc3p";
+    private const string Url = "https://gist.githubusercontent.com/ArdeleanTudor/8ea407832cd9794960e0e6bbd1319f6e/raw";
 
     public ItemRepository(HttpClient httpClient)
     {
@@ -15,12 +15,12 @@ public class ItemRepository : IItemReader
 
     public async Task<IEnumerable<Grade>> GetAllAsync()
     {
-        var items = await _httpClient.GetFromJsonAsync<List<Grade>>(Url);
-        if (items == null)
+        var response = await _httpClient.GetFromJsonAsync<Response>(Url);
+        if (response == null)
         {
             return new List<Grade>();
         }
-        return items;
+        return response.Items;
     }
 
     public async Task<Grade?> GetByIdAsync(int id)
