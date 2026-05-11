@@ -6,11 +6,12 @@ namespace Siemens.Internship2026.GradeBook.Repositories;
 public class ItemRepository : IItemReader
 {
     private readonly HttpClient _httpClient;
-    private const string Url = "https://gist.githubusercontent.com/ArdeleanTudor/8ea407832cd9794960e0e6bbd1319f6e/raw";
+    private readonly string Url;
 
-    public ItemRepository(HttpClient httpClient)
+    public ItemRepository(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        Url = configuration["ExternalEndpoint"]!;
     }
 
     public async Task<IEnumerable<Grade>> GetAllAsync()
